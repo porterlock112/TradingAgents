@@ -47,14 +47,9 @@ def create_news_analyst(llm, toolkit):
         chain = prompt | llm.bind_tools(tools)
         result = chain.invoke(state["messages"])
 
-        report = ""
-
-        if len(result.tool_calls) == 0:
-            report = result.content
-
         return {
             "messages": [result],
-            "news_report": report,
+            "news_report": result.content,
         }
 
     return news_analyst_node
